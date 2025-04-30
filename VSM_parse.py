@@ -52,17 +52,20 @@ if angle.size==0:
     np.savetxt(strng, dataout, delimiter='\t', header=intro, fmt='%.5e',comments='')
 
 else:
-    
+#----------------------------------------
+    indicator=0 #for uncorrected data have the indicator 0, and 1 for corrected
+#----------------------------------------
+ 
     for i, element in enumerate(angle):
         print(i)
         try:
-            Field=np.empty(len(root.find('ResultCharts').findall('.//MeasurementChart')[i*2+1].findall('.//ChartDataPoint')))
+            Field=np.empty(len(root.find('ResultCharts').findall('.//MeasurementChart')[i*2+indicator].findall('.//ChartDataPoint')))
             moment=np.empty(len(Field))
         except:
             print('Batch measurement stopped before completion')
             break
         
-        for n, ele in enumerate(root.find('ResultCharts').findall('.//MeasurementChart')[i*2+1].findall('.//ChartDataPoint')):
+        for n, ele in enumerate(root.find('ResultCharts').findall('.//MeasurementChart')[i*2+indicator].findall('.//ChartDataPoint')):
             Field[n]=float(ele.find('.//X').text)
             moment[n]=float(ele.find('.//Y').text)
         
